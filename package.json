@@ -4,6 +4,10 @@
   "main": "server.js",
   "author": "Julia Glinka <julia.w.glinka@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "npm-run-all -l -p start:*",
+    "start:server": "nodemon server.js"
+  },
   "dependencies": {
     "express": "4.17.1"
   },
