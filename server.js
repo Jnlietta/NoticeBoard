@@ -16,6 +16,10 @@ app.use(express.urlencoded({ extended: false }));
 // serve static files from react app
 //app.use(express.static(path.join(__dirname, '/client/build')));
 
+//add routes
+app.use('/api', require('./routes/ads.routes'));
+app.use('/api', require('./routes/auth.routes'));
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
