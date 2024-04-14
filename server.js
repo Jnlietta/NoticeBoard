@@ -28,3 +28,12 @@ app.get('*', (req, res) => {
 app.use((req, res) => {
     res.status(404).send({ message: 'Not found...' });
 });
+
+ // connects our backend code with the database
+ mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: true });
+ const db = mongoose.connection;
+
+ db.once('open', () => {
+ console.log('Connected to the database');
+ });
+ db.on('error', err => console.log('Error ' + err));
