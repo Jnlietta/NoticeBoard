@@ -1,0 +1,7 @@
+{
+  "name": "NoticeBoard",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Julia Glinka <julia.w.glinka@gmail.com>",
+  "license": "MIT"
+}
