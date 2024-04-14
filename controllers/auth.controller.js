@@ -1,4 +1,5 @@
 const User = require('../models/User.model');
+const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res) => {
     const { login, password, avatar, phone } = req.body;
@@ -12,8 +13,10 @@ exports.register = async (req, res) => {
             res.status(409).send({ message: 'User with this login already exists'});
         }
 
+        const user = new User({ login, password: await bcrypt.hash(password,10) });
     }
     res.send('register');
+
 };
 
 exports.login = async (req, res) => {};
