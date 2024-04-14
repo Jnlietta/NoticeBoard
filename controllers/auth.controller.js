@@ -2,21 +2,29 @@ const User = require('../models/User.model');
 const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res) => {
-    const { login, password, avatar, phone } = req.body;
 
-    if(login && typeof login === 'string' && password && typeof password == 'string' &&
-       avatar && typeof avatar === 'string' && phone && typeof phone == 'number') {
+    try{
+        const { login, password, avatar, phone } = req.body;
 
-        const userWithLogin = await User.findOne({ login });
+        if(login && typeof login === 'string' && password && typeof password == 'string' &&
+           avatar && typeof avatar === 'string' && phone && typeof phone === 'string') {
+    
+            const userWithLogin = await User.findOne({ login });
+    
+            if(userWithLogin){
+                return res.status(409).send({ message: 'User with this login already exists'});
+            }
+    
+            const user = await User.create({ login, password: await bcrypt.hash(password, 10),  avatar, phone });
+            res.status(201).send({ message: 'User created: ' + user.login});
 
-        if(userWithLogin){
-            res.status(409).send({ message: 'User with this login already exists'});
+        } else {
+            res.status(400).send({ message: 'Bad request' });
         }
-
-        const user = new User({ login, password: await bcrypt.hash(password,10) });
+        
+    } catch(err) {
+        res.status(500).send({ message: err.message });
     }
-    res.send('register');
-
 };
 
 exports.login = async (req, res) => {};
