@@ -16,7 +16,9 @@ const server = app.listen(process.env.PORT || 8000, () => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({ secret: 'xyz567', store: MongoStore.create(mongoose.connection) }));
+
+const mongoUrl = 'mongodb://0.0.0.0:27017/noticeBoardDB';
+app.use(session({ secret: 'xyz567', store: MongoStore.create({ mongoUrl: mongoUrl }) }));
 
 // serve static files from react app
 //app.use(express.static(path.join(__dirname, '/client/build')));
