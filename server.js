@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const mongoUrl = 'mongodb://0.0.0.0:27017/noticeBoardDB';
-app.use(session({ secret: 'xyz567', 
+app.use(session({ secret: `${process.env.SESSION_PASS}`, 
                   resave: false, 
                   saveUninitialized: false,
                   store: MongoStore.create({ mongoUrl: mongoUrl }) }));
