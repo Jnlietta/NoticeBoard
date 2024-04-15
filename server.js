@@ -17,29 +17,31 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const mongoUrl = 'mongodb://0.0.0.0:27017/noticeBoardDB';
-app.use(session({ secret: `${process.env.SESSION_PASS}`, 
-                  resave: false, 
-                  saveUninitialized: false,
-                  store: MongoStore.create({ mongoUrl: mongoUrl }) }));
+mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: true }).then(() => {
 
-// serve static files from react app
-//app.use(express.static(path.join(__dirname, '/client/build')));
+  app.use(session({ secret: `${process.env.SESSION_PASS}`, 
+                    resave: false, 
+                    saveUninitialized: false,
+                    store: MongoStore.create(mongoose.connection) }));
 
-//add routes
-app.use('/api', require('./routes/ads.routes'));
-app.use('/api', require('./routes/auth.routes'));
+  // serve static files from react app
+  //app.use(express.static(path.join(__dirname, '/client/build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
-  
+  //add routes
+  app.use('/api', require('./routes/ads.routes'));
+  app.use('/api', require('./routes/auth.routes'));
+
+  app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  });
+
 app.use((req, res) => {
     res.status(404).send({ message: 'Not found...' });
 });
 
+});
+
  // connects our backend code with the database
- mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: true });
  const db = mongoose.connection;
 
  db.once('open', () => {
