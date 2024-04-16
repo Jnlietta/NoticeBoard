@@ -1,4 +1,5 @@
 const Ads = require('../models/Ads.model');
+const sanitize = require('mongo-sanitize');
 
 exports.getAll = async (req, res) => {
     try {
@@ -23,7 +24,32 @@ exports.getById = async (req, res) => {
 exports.getBySearchPhrase = async (req, res) => {};
 
 exports.addNew = async (req, res) => {
-    
+    try {
+        const { title, content, date, src, price, location, seller } = req.body;
+        const sanitizedTitle = sanitize(title);
+        const sanitizedContent = sanitize(content);
+        const sanitizedDate = sanitize(date);
+        const sanitizedSrc = sanitize(src);
+        const sanitizedPrice = sanitize(price);
+        const sanitizedLocation = sanitize(location);
+        const sanitizedSeller = sanitize(seller);
+  
+        const newAds = await Ads.create({ 
+          title: sanitizedTitle, 
+          content: sanitizedContent, 
+          date: sanitizedDate, 
+          src: sanitizedSrc,
+          price: sanitizedPrice, 
+          location: sanitizedLocation, 
+          seller: sanitizedSeller
+        });
+
+        res.status(201).send({ message: 'Advert created: ' + newAds.title });
+        
+      } 
+      catch(err) {
+        res.status(500).json({ message: err });
+      }
 };
 
 exports.editById = async (req, res) => {};
@@ -33,7 +59,7 @@ exports.deleteById = async (req, res) => {
         const id = req.params.id; 
     
         // Remove all data from id
-        const deletedAds = await Photo.findOneAndDelete({ _id: id });
+        const deletedAds = await Ads.findOneAndDelete({ _id: id });
         if(deletedAds) {
             res.json({ message: 'Advertisement has been deleted' });
           }
