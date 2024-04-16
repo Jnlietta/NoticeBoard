@@ -26,6 +26,7 @@ exports.getBySearchPhrase = async (req, res) => {};
 exports.addNew = async (req, res) => {
     try {
         const { title, content, date, src, price, location, seller } = req.body;
+
         const sanitizedTitle = sanitize(title);
         const sanitizedContent = sanitize(content);
         const sanitizedDate = sanitize(date);
@@ -52,7 +53,40 @@ exports.addNew = async (req, res) => {
       }
 };
 
-exports.editById = async (req, res) => {};
+exports.editById = async (req, res) => {
+    const { title, content, date, src, price, location, seller } = req.body;
+
+    const sanitizedTitle = sanitize(title);
+    const sanitizedContent = sanitize(content);
+    const sanitizedDate = sanitize(date);
+    const sanitizedSrc = sanitize(src);
+    const sanitizedPrice = sanitize(price);
+    const sanitizedLocation = sanitize(location);
+    const sanitizedSeller = sanitize(seller);
+
+    try {    
+      const ubdatedAds = await Ads.findByIdAndUpdate(
+        { _id: req.params.id }, 
+        { $set: { 
+            title: sanitizedTitle, 
+            content: sanitizedContent, 
+            date: sanitizedDate, 
+            src: sanitizedSrc,
+            price: sanitizedPrice, 
+            location: sanitizedLocation, 
+            seller: sanitizedSeller  
+         }},
+        { new: true }
+      );
+      if(ubdatedAds) {
+        res.json(ubdatedAds);
+      }
+      else res.status(404).json({ message: 'Not found...' });
+    }
+    catch(err) {
+      res.status(500).json({ message: err });
+    }
+};
 
 exports.deleteById = async (req, res) => {
     try {
