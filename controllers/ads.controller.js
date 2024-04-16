@@ -21,6 +21,25 @@ exports.getById = async (req, res) => {
 };
 
 exports.getBySearchPhrase = async (req, res) => {};
-exports.addNew = async (req, res) => {};
+
+exports.addNew = async (req, res) => {
+    
+};
+
 exports.editById = async (req, res) => {};
-exports.deleteById = async (req, res) => {};
+
+exports.deleteById = async (req, res) => {
+    try {
+        const id = req.params.id; 
+    
+        // Remove all data from id
+        const deletedAds = await Photo.findOneAndDelete({ _id: id });
+        if(deletedAds) {
+            res.json({ message: 'Advertisement has been deleted' });
+          }
+          else res.status(404).json({ message: 'Not found...' });
+        
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+};
