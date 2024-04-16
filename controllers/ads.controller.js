@@ -21,7 +21,15 @@ exports.getById = async (req, res) => {
       }
 };
 
-exports.getBySearchPhrase = async (req, res) => {};
+exports.getBySearchPhrase = async (req, res) => {
+    try {
+        const searchPhrase = req.params.searchPhrase;
+        const ads = await Ads.find({ title: { $regex: searchPhrase, $options: 'i' }});
+        res.json(ads);
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+};
 
 exports.addNew = async (req, res) => {
     try {
