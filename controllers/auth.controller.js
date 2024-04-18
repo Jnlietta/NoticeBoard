@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
         const avatar = req.file.filename;
 
         if(login && typeof login === 'string' && password && typeof password == 'string' &&
-           avatar && typeof avatar === 'string' && phone && typeof phone === 'string') {
+            typeof avatar === 'string' && phone && typeof phone === 'string' && req.file) {
     
             const userWithLogin = await User.findOne({ login });
     
