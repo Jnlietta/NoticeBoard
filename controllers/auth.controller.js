@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res) => {
     try {
-        const { login, password, avatar, phone } = req.body;
+        const { login, password, phone } = req.body;
+        const avatar = req.file.filename;
 
         if(login && typeof login === 'string' && password && typeof password == 'string' &&
            avatar && typeof avatar === 'string' && phone && typeof phone === 'string') {
