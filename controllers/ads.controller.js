@@ -33,12 +33,12 @@ exports.getBySearchPhrase = async (req, res) => {
 
 exports.addNew = async (req, res) => {
     try {
-        const { title, content, date, src, price, location, seller } = req.body;
+        const { title, content, date, photo, price, location, seller } = req.body;
 
         const sanitizedTitle = sanitize(title);
         const sanitizedContent = sanitize(content);
         const sanitizedDate = sanitize(date);
-        const sanitizedSrc = sanitize(src);
+        const sanitizedPhoto = sanitize(photo);
         const sanitizedPrice = sanitize(price);
         const sanitizedLocation = sanitize(location);
         const sanitizedSeller = sanitize(seller);
@@ -47,7 +47,7 @@ exports.addNew = async (req, res) => {
           title: sanitizedTitle, 
           content: sanitizedContent, 
           date: sanitizedDate, 
-          src: sanitizedSrc,
+          photo: sanitizedPhoto,
           price: sanitizedPrice, 
           location: sanitizedLocation, 
           seller: sanitizedSeller
@@ -62,12 +62,12 @@ exports.addNew = async (req, res) => {
 };
 
 exports.editById = async (req, res) => {
-    const { title, content, date, src, price, location, seller } = req.body;
+    const { title, content, date, photo, price, location, seller } = req.body;
 
     const sanitizedTitle = sanitize(title);
     const sanitizedContent = sanitize(content);
     const sanitizedDate = sanitize(date);
-    const sanitizedSrc = sanitize(src);
+    const sanitizedPhoto = sanitize(photo);
     const sanitizedPrice = sanitize(price);
     const sanitizedLocation = sanitize(location);
     const sanitizedSeller = sanitize(seller);
@@ -79,7 +79,7 @@ exports.editById = async (req, res) => {
             title: sanitizedTitle, 
             content: sanitizedContent, 
             date: sanitizedDate, 
-            src: sanitizedSrc,
+            photo: sanitizedPhoto,
             price: sanitizedPrice, 
             location: sanitizedLocation, 
             seller: sanitizedSeller  
