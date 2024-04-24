@@ -1,5 +1,7 @@
 const Ads = require('../models/Ads.model');
 const sanitize = require('mongo-sanitize');
+const getImageFileType = require('../utils/getImageFileType');
+const deleteFile = require('../utils/deleteFile');
 
 exports.getAll = async (req, res) => {
     try {
@@ -33,28 +35,39 @@ exports.getBySearchPhrase = async (req, res) => {
 
 exports.addNew = async (req, res) => {
     try {
-        const { title, content, date, photo, price, location, seller } = req.body;
+        const { title, content, date, price, location, seller } = req.body;
 
         const sanitizedTitle = sanitize(title);
         const sanitizedContent = sanitize(content);
         const sanitizedDate = sanitize(date);
-        const sanitizedPhoto = sanitize(photo);
         const sanitizedPrice = sanitize(price);
         const sanitizedLocation = sanitize(location);
         const sanitizedSeller = sanitize(seller);
   
-        const newAds = await Ads.create({ 
-          title: sanitizedTitle, 
-          content: sanitizedContent, 
-          date: sanitizedDate, 
-          photo: sanitizedPhoto,
-          price: sanitizedPrice, 
-          location: sanitizedLocation, 
-          seller: sanitizedSeller
-        });
+        const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
+        const photo = req.file.filename;
 
-        res.status(201).send({ message: 'Advert created: ' + newAds.title });
-        
+        if(sanitizedTitle && typeof sanitizedTitle === 'string' && sanitizedContent && typeof sanitizedContent == 'string' &&
+          sanitizedDate && typeof sanitizedDate === 'string' && req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
+          sanitizedPrice && typeof sanitizedPrice === 'string' && sanitizedLocation && typeof sanitizedLocation === 'string' && 
+          sanitizedSeller && typeof sanitizedSeller == 'string') {
+          
+          const newAds = await Ads.create({ 
+            title: sanitizedTitle, 
+            content: sanitizedContent, 
+            date: sanitizedDate, 
+            photo: photo,
+            price: sanitizedPrice, 
+            location: sanitizedLocation, 
+            seller: sanitizedSeller
+          });
+
+          res.status(201).send({ message: 'Advert created: ' + newAds.title });
+          
+        } else {
+          deleteFile(req.file.path);
+          res.status(400).send({ message: 'Bad request' });
+        }
       } 
       catch(err) {
         res.status(500).json({ message: err });
