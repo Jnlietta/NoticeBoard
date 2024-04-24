@@ -75,38 +75,64 @@ exports.addNew = async (req, res) => {
 };
 
 exports.editById = async (req, res) => {
-    const { title, content, date, photo, price, location, seller } = req.body;
+  try { 
+    const { title, content, date, price, location, seller } = req.body;
 
     const sanitizedTitle = sanitize(title);
     const sanitizedContent = sanitize(content);
     const sanitizedDate = sanitize(date);
-    const sanitizedPhoto = sanitize(photo);
     const sanitizedPrice = sanitize(price);
     const sanitizedLocation = sanitize(location);
     const sanitizedSeller = sanitize(seller);
 
-    try {    
+    let photoPath = null;
+    let fileType = '';
+
+    // check if it is new file
+    if(req.file){
+      // find previous photo file and delete
+      const existingAdvertisement = await Ads.findById(req.params.id);
+      deleteFile(`public/uploads/${existingAdvertisement.photo}`);
+
+      fileType = await getImageFileType(req.file);
+      photoPath = req.file.filename;
+    }
+       
+    //  check if data fron form is correct
+    if(sanitizedTitle && typeof sanitizedTitle === 'string' && sanitizedContent && typeof sanitizedContent == 'string' &&
+        sanitizedDate && typeof sanitizedDate === 'string' && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
+        sanitizedPrice && typeof sanitizedPrice === 'string' && sanitizedLocation && typeof sanitizedLocation === 'string' && 
+        sanitizedSeller && typeof sanitizedSeller == 'string') {
+
       const ubdatedAds = await Ads.findByIdAndUpdate(
         { _id: req.params.id }, 
         { $set: { 
             title: sanitizedTitle, 
             content: sanitizedContent, 
             date: sanitizedDate, 
-            photo: sanitizedPhoto,
+            ...(photoPath && { photo: photoPath }),
             price: sanitizedPrice, 
             location: sanitizedLocation, 
             seller: sanitizedSeller  
-         }},
+        }},
         { new: true }
       );
+
       if(ubdatedAds) {
         res.json(ubdatedAds);
       }
       else res.status(404).json({ message: 'Not found...' });
+
+    } else {
+      deleteFile(req.file.path);
+      res.status(400).send({ message: 'Bad request' });
     }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
+
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+
 };
 
 exports.deleteById = async (req, res) => {
