@@ -26,6 +26,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: tru
 
   // serve static files from react app
   //app.use(express.static(path.join(__dirname, '/client/build')));
+  app.use(express.static(path.join(__dirname, '/public')));
 
   //add routes
   app.use('/api', require('./routes/ads.routes'));
@@ -35,9 +36,9 @@ mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: tru
       res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 
-app.use((req, res) => {
-    res.status(404).send({ message: 'Not found...' });
-});
+  app.use((req, res) => {
+      res.status(404).send({ message: 'Not found...' });
+  });
 
 });
 
