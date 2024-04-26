@@ -1,4 +1,4 @@
-import AllPosts from '../../features/AllPosts/AllPosts';
+import AllPosts from '../../features/AllAds/AllAds';
 import SearchForm from '../../features/SearchForm/SearchForm';
 
 const Home = props => {

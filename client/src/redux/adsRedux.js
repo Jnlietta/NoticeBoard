@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_URL } from '../config';
 
 /* SELECTORS */
-export const getPosts = ({ ads }) => ads.data;
+export const getAds = ({ ads }) => ads.data;
 export const getRequest = ({ ads }) => ads.request;
 
 
