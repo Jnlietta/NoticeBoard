@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { getRequest, LOAD_ADS } from '../../../redux/adsRedux';
 import { useSelector } from 'react-redux';
+import { IMAGES_URL } from '../../../config';
 
 const AllAds = ({ data }) => {
   const request = useSelector(state => getRequest(state, LOAD_ADS));
@@ -14,7 +15,7 @@ const AllAds = ({ data }) => {
       {data.map(ad => 
         <Col key={ad._id} xs="12" md="6" lg="3">
           <Card style={{ width: '18rem', marginTop: '20px' }}>
-            <Card.Img variant="top" src={ad.photo} />
+            <Card.Img variant="top" src={`${IMAGES_URL}/${ad.photo}`} />
             <Card.Body>
               <Card.Title>{ad.title}</Card.Title>
               <Card.Text>{ad.location}</Card.Text>
