@@ -1,5 +1,6 @@
 /* SELECTORS */
 export const getPosts = ({ ads }) => ads.data;
+export const getRequests = ({ ads }) => ads.requests;
 
 
 /* ACTIONS */
