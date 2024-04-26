@@ -12,8 +12,21 @@ import SearchPost from './components/pages/SearchPost/SearchPost';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
 
+import { loadAdsRequest } from './redux/adsRedux';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+
+
 
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadAdsRequest())
+  }, [dispatch]);
+
   return (
     <Container>
       <Header />
