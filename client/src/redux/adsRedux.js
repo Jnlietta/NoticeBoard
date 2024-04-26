@@ -16,8 +16,8 @@ const START_REQUEST = createActionName('START_REQUEST');
 const END_REQUEST = createActionName('END_REQUEST');
 const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 
-const LOAD_ADS = createActionName('LOAD_ADS');
-const ADD_AD = createActionName('ADD_AD');
+export const LOAD_ADS = createActionName('LOAD_ADS');
+export const ADD_AD = createActionName('ADD_AD');
 
 export const startRequest = payload => ({ payload, type: START_REQUEST });
 export const endRequest = payload => ({ payload, type: END_REQUEST });
