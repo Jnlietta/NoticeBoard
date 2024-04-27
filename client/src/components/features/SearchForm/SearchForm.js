@@ -2,10 +2,13 @@ import { Form, FormControl } from 'react-bootstrap';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { loadSearchAdsRequest } from "../../../redux/adsRedux";
 
 const SearchForm = () => {
   const [ searchPhrase, setSearchPhrase ] = useState('');
-  
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -15,6 +18,7 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(loadSearchAdsRequest({searchPhrase}));
     navigate(`/ad/search/${searchPhrase}`);
   };
 
