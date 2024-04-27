@@ -9,12 +9,14 @@ import { NavLink } from "react-router-dom";
 
 const AllAds = ({ data }) => {
   const request = useSelector(state => getRequest(state, LOAD_ADS));
+  const sortedAds = data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     
   if(!request || !request.success) return <Spinner color="primary" className="standard-box d-block me-auto ms-auto" /> 
   else return (
     <section>
       <Row>
-      {data.map(ad => 
+      {sortedAds.map(ad => 
         <Col key={ad._id} xs="12" md="6" lg="3">
           <Card style={{ width: '18rem', marginTop: '20px' }}>
             <Card.Img variant="top" src={`${IMAGES_URL}/${ad.photo}`} />
