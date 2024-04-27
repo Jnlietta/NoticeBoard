@@ -3,6 +3,7 @@ import { getAd } from '../../../redux/adsRedux';
 import { useParams, NavLink } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { IMAGES_URL } from '../../../config';
+import formatDate from '../../../utils/formatDate';
 
 const Ad = props => {
     const {id} = useParams();
@@ -21,7 +22,7 @@ const Ad = props => {
             <div>
                 <p className="mb-0"><span>Author: </span>{ad.seller}</p>
                 <p className="mb-0"><span>Price: </span>{ad.price} $</p>
-                <p className="mb-0"><span>Published: </span>{ad.date}</p>
+                <p className="mb-0"><span>Published: </span>{formatDate(ad.date)}</p>
                 <p className="mb-0"><span>Location: </span>{ad.location}</p>
                 <br />
                 <p className="mb-0">{ad.content}</p>
