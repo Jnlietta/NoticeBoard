@@ -2,13 +2,16 @@ import styles from './Ad.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAd, removeAd } from '../../../redux/adsRedux';
 import { useParams, NavLink, Navigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { IMAGES_URL } from '../../../config';
 import formatDate from '../../../utils/formatDate';
+import { useState } from 'react';
 
 const Ad = ({ isLoggedIn }) => {
     const {id} = useParams();
     const ad = useSelector(state => getAd(state, id));
+
+    const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -16,6 +19,9 @@ const Ad = ({ isLoggedIn }) => {
         e.preventDefault();
         dispatch(removeAd(id));
     };
+
+    const handleCloseModal = () => setShowModal(false);
+    const handleShowModal = () => setShowModal(true);
 
     if(!ad) return <Navigate to="/" />
     else return(
@@ -25,7 +31,7 @@ const Ad = ({ isLoggedIn }) => {
                 {!isLoggedIn && 
                 <div className={styles.buttons}>
                     <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
-                    <Button variant="outline-danger" onClick={removeAdModal} >Delete</Button>
+                    <Button variant="outline-danger" onClick={handleShowModal} >Delete</Button>
                 </div>
                 }
             </div>
@@ -38,6 +44,25 @@ const Ad = ({ isLoggedIn }) => {
                 <br />
                 <p className="mb-0">{ad.content}</p>
             </div>
+
+            <Modal
+                show={showModal}
+                onHide={handleCloseModal}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    This operation will completely remove this advertisement from the app. 
+                    Are you sure you want to do that?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
+                    <Button variant="danger" onClick={removeAdModal}>Remove</Button>
+                </Modal.Footer>
+            </Modal>
         </article>    
     );
 };
