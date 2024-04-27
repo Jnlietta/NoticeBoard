@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchForm = () => {
-  const [ searchString, setSearchString ] = useState('');
+  const [ searchPhrase, setSearchPhrase ] = useState('');
   
   const navigate = useNavigate();
 
   const handleChange = e => {
     e.preventDefault();
-    setSearchString(e.target.value);
+    setSearchPhrase(e.target.value);
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/ad/search/${searchString}`);
+    navigate(`/ad/search/${searchPhrase}`);
   };
 
   return (
@@ -24,7 +24,7 @@ const SearchForm = () => {
         type="text"
         placeholder="Search..."
         className={clsx('mr-sm-2', 'w-50')}
-        value={searchString}
+        value={searchPhrase}
         onChange={handleChange}
         style={{textAlign: 'center'}}
         />
