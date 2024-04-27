@@ -7,7 +7,7 @@ import { IMAGES_URL } from '../../../config';
 import { NavLink } from "react-router-dom";
 
 
-const AllAds = ({ data }) => {
+const Ads = ({ data }) => {
   const request = useSelector(state => getRequest(state, LOAD_ADS));
   const sortedAds = data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -33,4 +33,4 @@ const AllAds = ({ data }) => {
   );
 }
 
-export default AllAds;
+export default Ads;

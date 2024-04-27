@@ -1,5 +1,5 @@
 import { getAds } from '../../../redux/adsRedux';
-import AllAds from '../../features/AllAds/AllAds';
+import Ads from '../../common/Ads/Ads';
 import SearchForm from '../../features/SearchForm/SearchForm';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ const Home = props => {
         <div>
             <h1>Home</h1>
             <SearchForm />
-            <AllAds data={ads} />
+            <Ads data={ads} />
         </div>
     );
 };
