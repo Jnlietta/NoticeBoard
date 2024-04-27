@@ -37,8 +37,12 @@ const Ad = ({ isLoggedIn }) => {
                 }
             </div>
             <img src={`${IMAGES_URL}/${ad.photo}`} alt={ad.title} className={styles.image} />
+            <div className={styles.author}>
+                <p className="mb-0"><span>Author: </span>{ad.seller.login}</p>
+                <img src={`${IMAGES_URL}/${ad.seller.avatar}`} alt={ad.seller.login} className={styles.avatar} />
+            </div>
             <div className={styles.text}>
-                <p className="mb-0"><span>Author: </span>{ad.seller}</p>
+                <p className="mb-0"><span>Phone: </span>{ad.seller.phone}</p>
                 <p className="mb-0"><span>Price: </span>{ad.price} $</p>
                 <p className="mb-0"><span>Published: </span>{formatDate(ad.date)}</p>
                 <p className="mb-0"><span>Location: </span>{ad.location}</p>
