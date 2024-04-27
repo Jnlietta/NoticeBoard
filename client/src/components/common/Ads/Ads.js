@@ -1,3 +1,4 @@
+import styles from './Ads.module.scss';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Row, Col, Spinner } from 'react-bootstrap';
@@ -14,12 +15,12 @@ const Ads = ({ data }) => {
     
   if(!request || !request.success) return <Spinner color="primary" className="standard-box d-block me-auto ms-auto" /> 
   else return (
-    <section>
+    <section className={styles.adverts}>
       <Row>
       {sortedAds.map(ad => 
-        <Col key={ad._id} xs="12" md="6" lg="3">
-          <Card style={{ width: '18rem', marginTop: '20px' }}>
-            <Card.Img variant="top" src={`${IMAGES_URL}/${ad.photo}`} />
+        <Col key={ad._id} xs="12" md="6" lg="4" xl="3" >
+          <Card style={{ width: '18rem', height: "420px", marginTop: '20px' }}>
+            <Card.Img variant="top" src={`${IMAGES_URL}/${ad.photo}`} style={{ height: "70%", objectFit: "cover" }}/>
             <Card.Body>
               <Card.Title>{ad.title}</Card.Title>
               <Card.Text>{ad.location}</Card.Text>

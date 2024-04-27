@@ -8,7 +8,6 @@ const Home = props => {
 
     return(
         <div>
-            <h1>Home</h1>
             <SearchForm />
             <Ads data={ads} />
         </div>
