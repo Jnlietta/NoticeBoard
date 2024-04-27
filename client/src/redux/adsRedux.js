@@ -44,6 +44,23 @@ export const loadAdsRequest = () => {
   };
 };
 
+export const loadSearchAdsRequest = ({ searchPhrase }) => {
+  return async dispatch => {
+
+    dispatch(startRequest());
+    try {
+
+      let res = await axios.get(`${API_URL}/ads/search/${searchPhrase}`);
+      dispatch(loadAds(res.data));
+      dispatch(endRequest());
+
+    } catch(e) {
+      dispatch(errorRequest(e.message));
+    }
+    
+  };
+};
+
 /* INITIAL STATE */
 
 const initialState = {
