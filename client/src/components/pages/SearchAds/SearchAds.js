@@ -1,7 +1,13 @@
-const SearchAd = props => {
+import { useSelector } from "react-redux";
+import { getSearchAds } from "../../../redux/adsRedux";
+import Ads from "../../common/Ads/Ads";
+
+const SearchAds = props => {
+    const ads = useSelector(getSearchAds);
+
     return(
-        <h1>SearchAd</h1>
+        <Ads data = {ads} />
     );
 };
 
-export default SearchAd;
+export default SearchAds;
