@@ -1,6 +1,33 @@
+import { useSelector } from 'react-redux';
+import { getAd } from '../../../redux/adsRedux';
+import { useParams, NavLink } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { IMAGES_URL } from '../../../config';
+
 const Ad = props => {
+    const {id} = useParams();
+    const ad = useSelector(state => getAd(state, id));
+
     return(
-        <h1>Ad</h1>
+        <article>
+            <div>
+                <h2>{ad.title}</h2>
+                <div>
+                    <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + ad.id}>Edit</Button>
+                    <Button variant="outline-danger">Delete</Button>
+                </div>
+            </div>
+            <img src={`${IMAGES_URL}/${ad.photo}`} alt={ad.title} />
+            <div>
+                <p className="mb-0"><span>Author: </span>{ad.seller}</p>
+                <p className="mb-0"><span>Price: </span>{ad.price} $</p>
+                <p className="mb-0"><span>Published: </span>{ad.date}</p>
+                <p className="mb-0"><span>Location: </span>{ad.location}</p>
+                <br />
+                <p className="mb-0">{ad.content}</p>
+
+            </div>
+        </article>    
     );
 };
 
