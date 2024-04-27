@@ -4,6 +4,8 @@ import { API_URL } from '../config';
 /* SELECTORS */
 export const getAds = ({ ads }) => ads.data;
 export const getSearchAds = ({ ads }) => ads.searchedData;
+export const getAd = ({ ads }, id) => ads.data.find(ad => ad._id === id);
+
 export const getRequest = ({ ads }) => ads.request;
 
 
