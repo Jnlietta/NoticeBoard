@@ -1,0 +1,38 @@
+.advert {
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+
+    .buttons {
+        a {
+            margin-right: 10px;
+        }
+    }
+}
+
+.image {
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0 10px 1px lightgray;
+    border-radius: 20px;
+
+    width: 80vw;
+    height: 60vh;
+    object-fit: cover;
+    
+}
+
+.text {
+    text-align: left;
+    margin-top: 20px;
+    width: 80%;
+
+    span {
+        font-weight: bolder;
+    }
+}
