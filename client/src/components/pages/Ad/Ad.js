@@ -1,6 +1,6 @@
 import styles from './Ad.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAd, removeAd } from '../../../redux/adsRedux';
+import { getAd, removeAd, removeAdRequest } from '../../../redux/adsRedux';
 import { useParams, NavLink, Navigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import { IMAGES_URL } from '../../../config';
@@ -17,6 +17,7 @@ const Ad = ({ isLoggedIn }) => {
 
     const removeAdModal = e => {
         e.preventDefault();
+        dispatch(removeAdRequest({id}));
         dispatch(removeAd(id));
     };
 
