@@ -22,6 +22,8 @@ const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 export const LOAD_ADS = createActionName('LOAD_ADS');
 export const LOAD_SEARCH_ADS = createActionName('LOAD_SEARCH_ADS');
 export const ADD_AD = createActionName('ADD_AD');
+const REMOVE_AD = createActionName('REMOVE_AD');
+
 
 export const startRequest = payload => ({ payload, type: START_REQUEST });
 export const endRequest = payload => ({ payload, type: END_REQUEST });
@@ -30,6 +32,7 @@ export const errorRequest = payload => ({ payload, type: ERROR_REQUEST });
 export const loadAds = payload => ({ payload, type: LOAD_ADS });
 export const loadSearchAds = payload => ({ payload, type: LOAD_SEARCH_ADS });
 export const addAd = payload => ({ payload, type: ADD_AD });
+export const removeAd = payload => ({ type: REMOVE_AD, payload });
 
 /* THUNKS */
 export const loadAdsRequest = () => {
@@ -82,6 +85,8 @@ export default function reducer(statePart = initialState, action = {}) {
       return { ...statePart, data: [...action.payload] };
     case LOAD_SEARCH_ADS:
       return { ...statePart, searchedData: [...action.payload] };
+    case REMOVE_AD:
+      return statePart.filter(ad => (ad._id !== action.payload));
     case START_REQUEST:
         return { ...statePart, request: { pending: true, error: null, success: false }} ;
     case END_REQUEST:

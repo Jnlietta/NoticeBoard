@@ -14,9 +14,9 @@ const Ad = ({ isLoggedIn }) => {
         <article className={styles.advert}>
             <div className={styles.header}>
                 <h2>{ad.title}</h2>
-                {isLoggedIn && 
+                {!isLoggedIn && 
                 <div className={styles.buttons}>
-                    <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + ad.id}>Edit</Button>
+                    <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
                     <Button variant="outline-danger">Delete</Button>
                 </div>
                 }
