@@ -86,7 +86,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case LOAD_SEARCH_ADS:
       return { ...statePart, searchedData: [...action.payload] };
     case REMOVE_AD:
-      return statePart.filter(ad => (ad._id !== action.payload));
+      return {...statePart, data: statePart.data.filter(ad => ad._id !== action.payload)};
     case START_REQUEST:
         return { ...statePart, request: { pending: true, error: null, success: false }} ;
     case END_REQUEST:
