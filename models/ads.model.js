@@ -7,7 +7,7 @@ const adsSchema = new mongoose.Schema({
   photo: { type: String, required: true },
   price: { type: Number, required: true },
   location: { type: String, required: true },
-  seller: { type: String, required: true, ref: 'User' }
+  seller: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }
 });
 
 module.exports = mongoose.model('Ads', adsSchema);

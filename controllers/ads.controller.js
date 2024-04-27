@@ -5,7 +5,7 @@ const deleteFile = require('../utils/deleteFile');
 
 exports.getAll = async (req, res) => {
     try {
-        res.json(await Ads.find());
+        res.json(await Ads.find().populate('seller'));
     }
     catch(err) {
         res.status(500).json({ message: err });
@@ -14,7 +14,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const ads = await Ads.findById(req.params.id);
+        const ads = await Ads.findById(req.params.id).populate('seller');
         if(!ads) res.status(404).json({ message: 'Not found' });
         else res.json(ads);
       }
@@ -26,7 +26,7 @@ exports.getById = async (req, res) => {
 exports.getBySearchPhrase = async (req, res) => {
     try {
         const searchPhrase = req.params.searchPhrase;
-        const ads = await Ads.find({ title: { $regex: searchPhrase, $options: 'i' }});
+        const ads = await Ads.find({ title: { $regex: searchPhrase, $options: 'i' }}).populate('seller');
         res.json(ads);
     } catch (err) {
         res.status(500).json({ message: err });
