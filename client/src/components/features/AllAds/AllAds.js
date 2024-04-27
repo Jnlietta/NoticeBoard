@@ -4,6 +4,8 @@ import { Row, Col, Spinner } from 'react-bootstrap';
 import { getRequest, LOAD_ADS } from '../../../redux/adsRedux';
 import { useSelector } from 'react-redux';
 import { IMAGES_URL } from '../../../config';
+import { NavLink } from "react-router-dom";
+
 
 const AllAds = ({ data }) => {
   const request = useSelector(state => getRequest(state, LOAD_ADS));
@@ -19,7 +21,7 @@ const AllAds = ({ data }) => {
             <Card.Body>
               <Card.Title>{ad.title}</Card.Title>
               <Card.Text>{ad.location}</Card.Text>
-              <Button variant="primary">Read more</Button>
+              <Button variant="primary" as={NavLink} to={`/ad/${ad._id}`}>Read more</Button>
             </Card.Body>
           </Card>
         </Col>
