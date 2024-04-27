@@ -69,6 +69,22 @@ export const loadSearchAdsRequest = ({ searchPhrase }) => {
   };
 };
 
+export const removeAdRequest = ({ id }) => {
+  return async dispatch => {
+
+    dispatch(startRequest());
+    try {
+
+      await axios.delete(`${API_URL}/ads/${id}`);
+      dispatch(endRequest());
+
+    } catch(e) {
+      dispatch(errorRequest(e.message));
+    }
+    
+  };
+};
+
 /* INITIAL STATE */
 
 const initialState = {
