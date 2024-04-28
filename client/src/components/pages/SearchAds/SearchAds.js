@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { getSearchAds } from "../../../redux/adsRedux";
-import Ads from "../../common/Ads/Ads";
+import Ads from "../../features/Ads/Ads";
 
 const SearchAds = props => {
     const ads = useSelector(getSearchAds);

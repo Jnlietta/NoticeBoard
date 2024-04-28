@@ -1,5 +1,5 @@
 import { getAds } from '../../../redux/adsRedux';
-import Ads from '../../common/Ads/Ads';
+import Ads from '../../features/Ads/Ads';
 import SearchForm from '../../features/SearchForm/SearchForm';
 import { useSelector } from 'react-redux';
 
