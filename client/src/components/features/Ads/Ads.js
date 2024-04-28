@@ -16,6 +16,8 @@ const Ads = ({ data }) => {
   if(!request || !request.success) return <Spinner color="primary" className="standard-box d-block me-auto ms-auto" /> 
   else return (
     <section className={styles.adverts}>
+      <Button variant="primary" as={NavLink} to="/ad/add"  className="mt-4">Add advert</Button>
+
       <Row>
       {sortedAds.map(ad => 
         <Col key={ad._id} xs="12" md="6" lg="4" xl="3" >
