@@ -1,6 +1,11 @@
+import EditAdForm from "../../features/EditAdForm/EditAdForm";
+
 const EditAd = props => {
     return(
-        <h1>EditAd</h1>
+        <div>
+            <h2>Edit Post</h2>
+            <EditAdForm />
+        </div>
     );
 };
 
