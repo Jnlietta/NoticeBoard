@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import ReactQuill from "react-quill";
+import DatePicker from "react-datepicker";
 
 
 const AdForm = ({ action, actionText, ...props }) => {
@@ -25,15 +28,29 @@ const AdForm = ({ action, actionText, ...props }) => {
           }
     };
 
+    const { register, handleSubmit: validate, formState: { errors } } = useForm();
+
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={validate(handleSubmit)}>
             <Form.Group>
                 <Form.Label>Title</Form.Label>
-                <Form.Control />
+                <Form.Control 
+                    {...register("title", { required: true, minLength: 10, maxLength: 50 })}
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    type="text" placeholder="Enter title"
+                    />
+                {errors.title && <small className="d-block form-text text-danger mt-2">Title has wrong length (min is 10 max is 50)</small>}
             </Form.Group>
             <Form.Group>
-                <Form.Label>Seeller</Form.Label>
-                <Form.Control />
+                <Form.Label>Seller</Form.Label>
+                <Form.Control 
+                    {...register("seller", { required: true })}
+                    value={seller} 
+                    onChange={e => setSeller(e.target.value)}
+                    type="text" placeholder="Enter name"
+                    />
+                {errors.seller && <small className="d-block form-text text-danger mt-2">Sellers name is wrong</small>}
             </Form.Group>
             <Form.Group>
                 <Form.Label>Photo</Form.Label>
@@ -41,19 +58,40 @@ const AdForm = ({ action, actionText, ...props }) => {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Price</Form.Label>
-                <Form.Control />
+                <Form.Control 
+                    {...register("price", { required: true })}
+                    value={price} 
+                    onChange={e => setPrice(e.target.value)}
+                    type="text" placeholder="Enter price"
+                    />
+                {errors.price && <small className="d-block form-text text-danger mt-2">This field is required</small>}
             </Form.Group>
             <Form.Group>
                 <Form.Label>Date</Form.Label>
-                <Form.Control />
-            </Form.Group>
+                <br/>
+                <DatePicker 
+                    selected={date} 
+                    onChange={date => setDate(date)} 
+                    />
+                {dateError && <small className="d-block form-text text-danger mt-2">This field is required</small>}            </Form.Group>
             <Form.Group>
                 <Form.Label>Location</Form.Label>
-                <Form.Control />
+                <Form.Control 
+                    {...register("location", { required: true })}
+                    value={location} 
+                    onChange={e => setLocation(e.target.value)}
+                    type="text" placeholder="Enter title"
+                    />
+                {errors.location && <small className="d-block form-text text-danger mt-2">This field is required</small>}
             </Form.Group>
             <Form.Group>
                 <Form.Label>Content</Form.Label>
-                <Form.Control />
+                <ReactQuill 
+                    theme="snow" 
+                    value={content} 
+                    onChange={setContent} 
+                    />
+                {contentError && <small className="d-block form-text text-danger mt-2">Content can't be empty (min 20 max 1000 signs)</small>}
             </Form.Group>
 
             <Button variant="primary" type="submit">{actionText}</Button>
