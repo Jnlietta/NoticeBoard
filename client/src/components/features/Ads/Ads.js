@@ -6,7 +6,6 @@ import { getRequest, LOAD_ADS } from '../../../redux/adsRedux';
 import { useSelector } from 'react-redux';
 import { IMAGES_URL } from '../../../config';
 import { NavLink } from "react-router-dom";
-import AdForm from '../AdForm/AdForm';
 
 
 const Ads = ({ data }) => {
@@ -31,7 +30,6 @@ const Ads = ({ data }) => {
         </Col>
       )}
       </Row>
-      <AdForm />
     </section>
   );
 }

@@ -96,7 +96,7 @@ const AdForm = ({ action, actionText, ...props }) => {
                 {contentError && <small className="d-block form-text text-danger mt-2">Content can't be empty (min 20 max 1000 signs)</small>}
             </Form.Group>
             
-            <Button variant="primary" type="submit" className="mb-3">{actionText}Action text</Button>
+            <Button variant="primary" type="submit" className="mb-3">{actionText}</Button>
         </Form>
     );
 };
