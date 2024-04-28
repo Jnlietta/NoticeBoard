@@ -22,7 +22,7 @@ const EditAdForm = () => {
         <AdForm
             action={handleSubmit}
             actionText="Edit Advert"
-            {...adToEdit}
+            // {...adToEdit}
             />
     );
 };
