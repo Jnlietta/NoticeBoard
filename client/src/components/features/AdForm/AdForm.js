@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
+import'react-quill/dist/quill.snow.css';
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const AdForm = ({ action, actionText, ...props }) => {
@@ -32,7 +34,7 @@ const AdForm = ({ action, actionText, ...props }) => {
 
     return (
         <Form onSubmit={validate(handleSubmit)}>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control 
                     {...register("title", { required: true, minLength: 10, maxLength: 50 })}
@@ -42,7 +44,7 @@ const AdForm = ({ action, actionText, ...props }) => {
                     />
                 {errors.title && <small className="d-block form-text text-danger mt-2">Title has wrong length (min is 10 max is 50)</small>}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Seller</Form.Label>
                 <Form.Control 
                     {...register("seller", { required: true })}
@@ -52,11 +54,11 @@ const AdForm = ({ action, actionText, ...props }) => {
                     />
                 {errors.seller && <small className="d-block form-text text-danger mt-2">Sellers name is wrong</small>}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Photo</Form.Label>
                 <Form.Control />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Price</Form.Label>
                 <Form.Control 
                     {...register("price", { required: true })}
@@ -66,7 +68,7 @@ const AdForm = ({ action, actionText, ...props }) => {
                     />
                 {errors.price && <small className="d-block form-text text-danger mt-2">This field is required</small>}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Date</Form.Label>
                 <br/>
                 <DatePicker 
@@ -74,7 +76,7 @@ const AdForm = ({ action, actionText, ...props }) => {
                     onChange={date => setDate(date)} 
                     />
                 {dateError && <small className="d-block form-text text-danger mt-2">This field is required</small>}            </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Location</Form.Label>
                 <Form.Control 
                     {...register("location", { required: true })}
@@ -84,7 +86,7 @@ const AdForm = ({ action, actionText, ...props }) => {
                     />
                 {errors.location && <small className="d-block form-text text-danger mt-2">This field is required</small>}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Content</Form.Label>
                 <ReactQuill 
                     theme="snow" 
@@ -93,8 +95,8 @@ const AdForm = ({ action, actionText, ...props }) => {
                     />
                 {contentError && <small className="d-block form-text text-danger mt-2">Content can't be empty (min 20 max 1000 signs)</small>}
             </Form.Group>
-
-            <Button variant="primary" type="submit">{actionText}</Button>
+            
+            <Button variant="primary" type="submit" className="mb-3">{actionText}Action text</Button>
         </Form>
     );
 };
