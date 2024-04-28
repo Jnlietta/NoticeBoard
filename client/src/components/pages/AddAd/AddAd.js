@@ -1,6 +1,11 @@
+import AddAdForm from "../../features/AddAdForm/AddAdForm";
+
 const AddAd = props => {
     return(
-        <h1>AddAd</h1>
+        <div>
+            <h1>Add Advert</h1>
+            <AddAdForm />
+        </div>
     );
 };
 

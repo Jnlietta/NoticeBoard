@@ -3,7 +3,7 @@ import { addAd } from "../../../redux/adsRedux";
 import { useNavigate } from "react-router-dom";
 import AdForm from "../AdForm/AdForm";
 
-const AddPostForm = () => {
+const AddAdForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,4 +21,4 @@ const AddPostForm = () => {
     );
 };
 
-export default AddPostForm;
+export default AddAdForm;
