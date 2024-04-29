@@ -60,7 +60,10 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Photo</Form.Label>
-                <Form.Control />
+                <Form.Control 
+                    type="file" 
+                    onChange={e => setPhoto(e.target.files[0])}
+                    />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Price</Form.Label>
