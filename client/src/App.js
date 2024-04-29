@@ -11,6 +11,7 @@ import EditAd from './components/pages/EditAd/EditAd';
 import SearchAd from './components/pages/SearchAds/SearchAds';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
+import Logout from './components/pages/Logout/Logout';
 
 import { loadAdsRequest } from './redux/adsRedux';
 import { useDispatch } from 'react-redux';
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/ad/search/:searchPhrase" element={<SearchAd />} />
         <Route path="/user/register" element={<Register />} />
         <Route path="/user/login" element={<Login />} />
+        <Route path="/user/logout" element={<Logout />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
