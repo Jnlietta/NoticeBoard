@@ -71,6 +71,32 @@ export const loadSearchAdsRequest = ({ searchPhrase }) => {
   };
 };
 
+export const addAdRequest = (data) => {
+  return async dispatch => {
+
+    dispatch(startRequest({ name: ADD_AD }));
+    try {
+
+      let res = await axios.post(
+        `${API_URL}/ads`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        },
+      );
+
+      dispatch(addAd(res.data));
+      dispatch(endRequest({ name: ADD_AD }));
+
+    } catch(e) {
+      dispatch(errorRequest({ name: ADD_AD, error: e.message }));
+    }
+
+  };
+};
+
 export const removeAdRequest = ({ id }) => {
   return async dispatch => {
 
