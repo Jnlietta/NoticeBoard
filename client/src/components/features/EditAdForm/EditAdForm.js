@@ -6,7 +6,10 @@ import AdForm from "../AdForm/AdForm";
 const EditAdForm = () => {
 
     const id = window.location.pathname.split('/').filter(Boolean).pop();
-    const adToEdit = useSelector(state => getAd(state, id));
+    const adById = useSelector(state => getAd(state, id));
+
+    const formatDate = new Date(adById.date);
+    console.log(formatDate, adById);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,13 +19,14 @@ const EditAdForm = () => {
         navigate('/');
     }
 
-    if(!adToEdit) return <Navigate to="/" />
+    if(!adById) return <Navigate to="/" />
 
     return(
         <AdForm
             action={handleSubmit}
             actionText="Edit Advert"
-            {...adToEdit}
+            formatDate={formatDate}
+            {...adById}
             />
     );
 };

@@ -7,14 +7,17 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const AdForm = ({ action, actionText, ...props }) => {
+const AdForm = ({ action, actionText, formatDate, ...props }) => {
+
     const [title, setTitle] = useState(props.title || '');
     const [seller, setSeller] = useState(props.seller || '');
     const [photo, setPhoto] = useState(props.photo || '');
     const [price, setPrice] = useState(props.price || '');
-    const [date, setDate] = useState(new Date(props.date) || new Date());
+    const [date, setDate] = useState(formatDate || '');
     const [location, setLocation] = useState(props.location || '');
     const [content, setContent] = useState(props.content || '');
+
+    console.log('date:', date);
 
     const emptyQuill = '<p><br></p>';
 
@@ -30,6 +33,7 @@ const AdForm = ({ action, actionText, ...props }) => {
           }
     };
 
+    
     const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
     return (
