@@ -38,7 +38,7 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
     const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
     return (
-        <Form onSubmit={validate(handleSubmit)}>
+        <Form onSubmit={validate(handleSubmit)} className="col-12 col-sm-6 mx-auto">
             <Form.Group className="mb-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control 
