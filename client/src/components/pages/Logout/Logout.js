@@ -9,6 +9,8 @@ const Logout = () => {
         .then(res => {
 
         });
+
+    return null;
 }
 
 export default Logout;
