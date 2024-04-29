@@ -103,6 +103,8 @@ export default function reducer(statePart = initialState, action = {}) {
       return { ...statePart, data: [...action.payload] };
     case LOAD_SEARCH_ADS:
       return { ...statePart, searchedData: [...action.payload] };
+    case ADD_AD:
+      return { ...statePart, data: [...statePart.data, { ...action.payload }] };
     case EDIT_AD:
       return { ...statePart, data: statePart.data.map(ad => (ad.id === action.payload.id ? { ...ad, ...action.payload } : ad))};
     case REMOVE_AD:

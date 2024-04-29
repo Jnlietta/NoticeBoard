@@ -29,6 +29,7 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
         setContentError(!content)
         setDateError(!date)
         if(content && date) {
+            console.log({ title, seller, photo, price, date, location, content });
             action({ title, seller, photo, price, date, location, content });
           }
     };
