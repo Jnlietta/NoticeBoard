@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 import { API_URL } from '../../../config';
 import { Alert, Spinner } from 'react-bootstrap';
+import { useDispatch } from "react-redux";
+import { logIn } from '../../../redux/authRedux';
 
 const Login = props => {
 
@@ -11,6 +13,7 @@ const Login = props => {
 
     const [ status, setStatus ] = useState(null); // null, loading, success, serverError, clientError
 
+    const dispatch = useDispatch();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -28,6 +31,7 @@ const Login = props => {
             .then(res => {
                 if (res.status === 200) {
                     setStatus('success');
+                    dispatch(logIn({ login }));
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else {
