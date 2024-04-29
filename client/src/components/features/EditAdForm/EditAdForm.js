@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { editAd, getAd } from "../../../redux/adsRedux";
+import { editAdRequest, getAd } from "../../../redux/adsRedux";
 import { Navigate, useNavigate } from "react-router-dom";
 import AdForm from "../AdForm/AdForm";
 
@@ -15,7 +15,7 @@ const EditAdForm = () => {
     const navigate = useNavigate();
 
     const handleSubmit = Ad => {
-        dispatch(editAd({...Ad, id}));
+        dispatch(editAdRequest({...Ad, id}));
         navigate('/');
     }
 

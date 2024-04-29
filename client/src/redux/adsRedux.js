@@ -97,6 +97,34 @@ export const addAdRequest = (data) => {
   };
 };
 
+export const editAdRequest = (data, id) => {
+  return async dispatch => {
+
+    console.log("request edit: ", data, id);
+
+    dispatch(startRequest({ name: ADD_AD }));
+    try {
+
+      let res = await axios.put(
+        `${API_URL}/ads/${id}`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        },
+      );
+
+      dispatch(editAd(res.data));
+      dispatch(endRequest({ name: ADD_AD }));
+
+    } catch(e) {
+      dispatch(errorRequest({ name: ADD_AD, error: e.message }));
+    }
+
+  };
+};
+
 export const removeAdRequest = ({ id }) => {
   return async dispatch => {
 
@@ -132,7 +160,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case ADD_AD:
       return { ...statePart, data: [...statePart.data, { ...action.payload }] };
     case EDIT_AD:
-      return { ...statePart, data: statePart.data.map(ad => (ad.id === action.payload.id ? { ...ad, ...action.payload } : ad))};
+      return { ...statePart, data: statePart.data.map(ad => (ad._id === action.payload.id ? { ...ad, ...action.payload } : ad))};
     case REMOVE_AD:
       return {...statePart, data: statePart.data.filter(ad => ad._id !== action.payload)};
     case START_REQUEST:
