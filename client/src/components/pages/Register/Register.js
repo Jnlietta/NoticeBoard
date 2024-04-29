@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
+import { API_URL } from '../../../config';;
 
 const Register = props => {
 
@@ -13,6 +14,20 @@ const Register = props => {
         e.preventDefault();
 
         console.log( login, password, phone, avatar);
+
+        const fd = new FormData();
+        fd.append('login', login);
+        fd.append('password', password);
+        fd.append('phone', phone);
+        fd.append('avatar', avatar);
+
+        const options = {
+            method: 'POST',
+            body: fd
+        };
+
+        fetch(`${API_URL}/auth/register`, options)
+
     };
 
     return(
