@@ -11,6 +11,9 @@ const Register = props => {
     const [ phone, setPhone ] = useState('');
     const [ avatar, setAvatar ] = useState(null);
 
+    const [ status, setStatus ] = useState(null); // null, loading, success, serverError, clientError, loginError
+
+
     const handleSubmit = e => {
         e.preventDefault();
 
@@ -27,7 +30,19 @@ const Register = props => {
             body: fd
         };
 
+        setStatus('loading');
         fetch(`${API_URL}/auth/register`, options)
+            .then(res => {
+                if (res.status === 201) {
+                    setStatus('success');
+                } else if (res.status === 400) {
+                    setStatus('clientError');
+                } else if (res.status === 409) {
+                    setStatus('loginError');
+                } else {
+                    setStatus('serverError');
+                }
+            })
 
     };
 
@@ -36,29 +51,39 @@ const Register = props => {
 
             <h1 className="my-4">Sign in</h1>
 
-            <Alert variant="success">
-                <Alert.Heading>Success!</Alert.Heading>
-                <p>You have been successfully registered! You can now log in..</p>
-            </Alert>
+            {status === "success" && (
+                <Alert variant="success">
+                    <Alert.Heading>Success!</Alert.Heading>
+                    <p>You have been successfully registered! You can now log in..</p>
+                </Alert>
+            )}
             
-            <Alert variant="danger">
-                <Alert.Heading>Something went wrong..</Alert.Heading>
-                <p>Unexpected error.. Try again!</p>
-            </Alert>
+            {status === "serverError" && (
+                <Alert variant="danger">
+                    <Alert.Heading>Something went wrong..</Alert.Heading>
+                    <p>Unexpected error.. Try again!</p>
+                </Alert>
+            )}
 
-            <Alert variant="danger">
-                <Alert.Heading>No enougth data</Alert.Heading>
-                <p>You have to fill all fields.</p>
-            </Alert>
+            {status === "clientError" && (
+                <Alert variant="danger">
+                    <Alert.Heading>No enougth data</Alert.Heading>
+                    <p>You have to fill all fields.</p>
+                </Alert>
+            )}
 
-            <Alert variant="warning">
-                <Alert.Heading>Login already in use.</Alert.Heading>
-                <p>You have to use other login.</p>
-            </Alert>
+            {status === "loginError" && (
+                <Alert variant="warning">
+                    <Alert.Heading>Login already in use.</Alert.Heading>
+                    <p>You have to use other login.</p>
+                </Alert>
+            )}
 
-            <Spinner animation="border" role="status" className="block mx-auto">
-                <span className="visually-hidden">Loading..</span>
-            </Spinner>
+            {status === "loading" && (
+                <Spinner animation="border" role="status" className="block mx-auto">
+                    <span className="visually-hidden">Loading..</span>
+                </Spinner>
+            )}
 
             <Form.Group className="mb-3" controlId="formLogin">
                 <Form.Label>Login</Form.Label>
