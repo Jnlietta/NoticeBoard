@@ -28,7 +28,7 @@ const initialState = {
 export default function reducer(statePart = initialState, action = {}) {
   switch (action.type) {
     case LOG_IN:
-      return { ...statePart, data: [...action.payload] };
+      return { ...statePart, data: action.payload };
     default:
       return statePart;
   }
