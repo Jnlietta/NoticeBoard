@@ -107,16 +107,16 @@ export const addAdRequest = (data) => {
   };
 };
 
-export const editAdRequest = (data, id) => {
+export const editAdRequest = (data) => {
   return async dispatch => {
 
-    console.log("request edit: ", data, id);
+    console.log("request edit: ", data, data.seller, data.id);
 
     dispatch(startRequest({ name: ADD_AD }));
     try {
 
       let res = await axios.put(
-        `${API_URL}/ads/${id}`,
+        `${API_URL}/ads/${data.id}`,
         data,
         {
           headers: {
@@ -124,6 +124,29 @@ export const editAdRequest = (data, id) => {
           },
         },
       );
+
+    //   const fd = new FormData();
+    //   fd.append('title', data.title);
+    //   fd.append('seller', data.seller);
+    //   fd.append('photo', data.photo);
+    //   fd.append('price', data.price);
+    //   fd.append('date', data.date);
+    //   fd.append('location', data.location);
+    //   fd.append('content', data.content);
+
+    //   console.log(fd);
+
+    //   const options = {
+    //     method: 'PUT',
+    //     body: fd
+    // };
+
+    // fetch(`${API_URL}/ads/${data.id}`, options)
+    //     .then(res => {
+    //         if (res.status === 201) {
+    //           dispatch(loadAdsRequest())
+    //         }
+    //     })
 
       dispatch(editAd(res.data));
       dispatch(endRequest({ name: ADD_AD }));
