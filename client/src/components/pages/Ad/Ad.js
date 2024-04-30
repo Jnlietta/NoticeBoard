@@ -46,7 +46,7 @@ const Ad = () => {
             <div className={styles.header}>
                 <h2>{ad.title}</h2>
 
-                {!isLoggedIn && !isAuthor &&
+                {isLoggedIn && isAuthor &&
                     <div className={styles.buttons}>
                         <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
                         <Button variant="outline-danger" onClick={handleShowModal}>Delete</Button>
