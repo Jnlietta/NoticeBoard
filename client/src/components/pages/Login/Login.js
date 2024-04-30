@@ -39,10 +39,13 @@ const Login = props => {
                 }
             })
             .then(data => {
-                if (data && data.userId) {
-                    dispatch(logIn({ login, userId: data.userId }));
+                if (data && data.user) {
+                    dispatch(logIn({ login, userId: data.user.id }));
                 }
             })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     return(
