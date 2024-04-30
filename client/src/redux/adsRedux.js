@@ -77,17 +77,27 @@ export const addAdRequest = (data) => {
     dispatch(startRequest({ name: ADD_AD }));
     try {
 
-      let res = await axios.post(
-        `${API_URL}/ads`,
-        data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-        },
-      );
+      const fd = new FormData();
+      fd.append('title', data.ad.title);
+      fd.append('seller', data.ad.seller);
+      fd.append('photo', data.ad.photo);
+      fd.append('price', data.ad.price);
+      fd.append('date', data.ad.date);
+      fd.append('location', data.ad.location);
+      fd.append('content', data.ad.content);
 
-      dispatch(addAd(res.data));
+      const options = {
+        method: 'POST',
+        body: fd
+    };
+
+    fetch(`${API_URL}/ads`, options)
+        .then(res => {
+            if (res.status === 201) {
+              dispatch(loadAdsRequest())
+            }
+        })
+      
       dispatch(endRequest({ name: ADD_AD }));
 
     } catch(e) {
