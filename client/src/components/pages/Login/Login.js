@@ -31,11 +31,16 @@ const Login = props => {
             .then(res => {
                 if (res.status === 200) {
                     setStatus('success');
-                    dispatch(logIn({ login }));
+                    return res.json();
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else {
                     setStatus('serverError');
+                }
+            })
+            .then(data => {
+                if (data && data.userId) {
+                    dispatch(logIn({ login, userId: data.userId }));
                 }
             })
     }
