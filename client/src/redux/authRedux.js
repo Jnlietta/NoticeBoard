@@ -1,4 +1,5 @@
 /* SELECTORS */
+export const selectorIsLoggedIn = ({ auth }) => auth.isLoggedIn;
 
 /* ACTIONS */
 
@@ -18,6 +19,7 @@ export const logOut = payload => ({ type: LOG_OUT, payload });
 
 const initialState = {
   data: [],
+  isLoggedIn: null,
   requests: [],
 };
 
@@ -26,9 +28,9 @@ const initialState = {
 export default function reducer(statePart = initialState, action = {}) {
   switch (action.type) {
     case LOG_IN:
-      return { ...statePart, data: action.payload };
+      return { ...statePart, data: action.payload, isLoggedIn: true };
     case LOG_OUT:
-      return { ...statePart, data: null };
+      return { ...statePart, data: null, isLoggedIn: false };
     default:
       return statePart;
   }
