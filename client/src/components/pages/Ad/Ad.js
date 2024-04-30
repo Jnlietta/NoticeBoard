@@ -7,6 +7,7 @@ import { IMAGES_URL } from '../../../config';
 import formatDate from '../../../utils/formatDate';
 import { useState } from 'react';
 import { getUser, selectorIsLoggedIn } from '../../../redux/authRedux';
+import { useNavigate } from "react-router-dom";
 
 const Ad = () => {
     const {id} = useParams();
@@ -26,11 +27,13 @@ const Ad = () => {
     const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const removeAdModal = e => {
         e.preventDefault();
         dispatch(removeAdRequest({id}));
         dispatch(removeAd(id));
+        navigate('/');
     };
 
     const handleCloseModal = () => setShowModal(false);
@@ -43,10 +46,10 @@ const Ad = () => {
             <div className={styles.header}>
                 <h2>{ad.title}</h2>
 
-                {isLoggedIn && isAuthor &&
+                {!isLoggedIn && !isAuthor &&
                     <div className={styles.buttons}>
                         <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
-                        <Button variant="outline-danger" onClick={handleShowModal} >Delete</Button>
+                        <Button variant="outline-danger" onClick={handleShowModal}>Delete</Button>
                     </div>
                 }
 
