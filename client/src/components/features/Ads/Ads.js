@@ -8,7 +8,7 @@ import { IMAGES_URL } from '../../../config';
 import { NavLink } from "react-router-dom";
 
 
-const Ads = ({ data }) => {
+const Ads = ({ data, isLoggedIn }) => {
   const request = useSelector(state => getRequest(state, LOAD_ADS));
   const sortedAds = data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -16,9 +16,13 @@ const Ads = ({ data }) => {
   if(!request || !request.success) return <Spinner color="primary" className="standard-box d-block me-auto ms-auto" /> 
   else return (
     <section className={styles.adverts}>
-      <Button variant="primary" as={NavLink} to="/ad/add"  className="mt-4">Add advert</Button>
+
+      {isLoggedIn &&
+        <Button variant="primary" as={NavLink} to="/ad/add"  className="mt-4">Add advert</Button>
+      }
 
       <Row>
+
       {sortedAds.map(ad => 
         <Col key={ad._id} xs="12" md="6" lg="4" xl="3" >
           <Card style={{ width: '18rem', height: "420px", marginTop: '20px' }}>
@@ -31,6 +35,7 @@ const Ads = ({ data }) => {
           </Card>
         </Col>
       )}
+      
       </Row>
     </section>
   );
