@@ -6,10 +6,22 @@ import { Button, Modal } from 'react-bootstrap';
 import { IMAGES_URL } from '../../../config';
 import formatDate from '../../../utils/formatDate';
 import { useState } from 'react';
+import { getUser, selectorIsLoggedIn } from '../../../redux/authRedux';
 
-const Ad = ({ isLoggedIn }) => {
+const Ad = () => {
     const {id} = useParams();
     const ad = useSelector(state => getAd(state, id));
+
+    const sellerAdLogin = ad.seller.login;
+    const userData = useSelector(getUser);
+
+    const isLoggedIn = useSelector(selectorIsLoggedIn);
+    let isAuthor = false;
+
+    // if advertisement is created by logged user
+    if(sellerAdLogin === userData.login) {
+        isAuthor = true;
+    }
 
     const [showModal, setShowModal] = useState(false);
 
@@ -27,20 +39,26 @@ const Ad = ({ isLoggedIn }) => {
     if(!ad) return <Navigate to="/" />
     else return(
         <article className={styles.advert}>
+
             <div className={styles.header}>
                 <h2>{ad.title}</h2>
-                {!isLoggedIn && 
-                <div className={styles.buttons}>
-                    <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
-                    <Button variant="outline-danger" onClick={handleShowModal} >Delete</Button>
-                </div>
+
+                {isLoggedIn && isAuthor &&
+                    <div className={styles.buttons}>
+                        <Button variant="outline-info" as={NavLink} to={"/ad/edit/" + id}>Edit</Button>
+                        <Button variant="outline-danger" onClick={handleShowModal} >Delete</Button>
+                    </div>
                 }
+
             </div>
+
             <img src={`${IMAGES_URL}/${ad.photo}`} alt={ad.title} className={styles.image} />
+
             <div className={styles.author}>
                 <p className="mb-0"><span>Author: </span>{ad.seller.login}</p>
                 <img src={`${IMAGES_URL}/${ad.seller.avatar}`} alt={ad.seller.login} className={styles.avatar} />
             </div>
+
             <div className={styles.text}>
                 <p className="mb-0"><span>Phone: </span>{ad.seller.phone}</p>
                 <p className="mb-0"><span>Price: </span>{ad.price} $</p>
@@ -68,6 +86,7 @@ const Ad = ({ isLoggedIn }) => {
                     <Button variant="danger" onClick={removeAdModal}>Remove</Button>
                 </Modal.Footer>
             </Modal>
+
         </article>    
     );
 };

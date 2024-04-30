@@ -1,5 +1,7 @@
 /* SELECTORS */
 export const selectorIsLoggedIn = ({ auth }) => auth.isLoggedIn;
+export const getUser = ({ auth }) => auth.data;
+
 
 /* ACTIONS */
 
