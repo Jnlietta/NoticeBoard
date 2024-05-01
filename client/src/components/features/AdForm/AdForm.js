@@ -6,7 +6,8 @@ import'react-quill/dist/quill.snow.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from 'react-redux';
-import { getUser } from "../../../redux/authRedux";
+import { getUser, selectorIsLoggedIn } from "../../../redux/authRedux";
+import NoPermission from "../../pages/NoPermission/NoPermission";
 
 
 const AdForm = ({ action, actionText, formatDate, ...props }) => {
@@ -17,6 +18,8 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
     const [date, setDate] = useState(formatDate || '');
     const [location, setLocation] = useState(props.location || '');
     const [content, setContent] = useState(props.content || '');
+
+    const isLoggedIn = useSelector(selectorIsLoggedIn);
 
     const user = useSelector(getUser);
     const seller = user.userId;
@@ -40,7 +43,9 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
 
     const { register, handleSubmit: validate, formState: { errors } } = useForm();
 
-    return (
+    if(!isLoggedIn) return <NoPermission /> ;
+
+    else return (
         <Form onSubmit={validate(handleSubmit)} className="col-12 col-sm-6 mx-auto">
             <Form.Group className="mb-3" controlId="formTitle">
                 <Form.Label>Title</Form.Label>
