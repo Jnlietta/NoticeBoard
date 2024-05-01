@@ -80,17 +80,21 @@ const Login = props => {
                 </Spinner>
             )}
 
-            <Form.Group className="mb-3" controlId="formLogin">
-                <Form.Label>Login</Form.Label>
-                <Form.Control type="text" value={login} onChange={e => setLogin(e.target.value)} placeholdder="Enter login" />
-            </Form.Group>
+            {status !== "success" && (
+                <div>
+                    <Form.Group className="mb-3" controlId="formLogin">
+                    <Form.Label>Login</Form.Label>
+                    <Form.Control type="text" value={login} onChange={e => setLogin(e.target.value)} placeholdder="Enter login" />
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholdder="Password" />
-            </Form.Group>
+                <Form.Group className="mb-3" controlId="formPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholdder="Password" />
+                </Form.Group>
 
-            <Button variant="primary" type="submit">Sign up</Button>
+                <Button variant="primary" type="submit">Sign up</Button>
+                </div>
+            )}
 
         </Form>
     );
