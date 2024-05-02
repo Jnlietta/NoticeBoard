@@ -23,7 +23,7 @@ const SearchForm = () => {
   };
 
   return (
-    <Form inline onSubmit={handleSubmit} className={clsx('justify-content-center', 'align-items-center', 'd-flex', 'h-100')}>
+    <Form onSubmit={handleSubmit} className={clsx('justify-content-center', 'align-items-center', 'd-flex', 'h-100')}>
       <FormControl
         type="text"
         placeholder="Search..."

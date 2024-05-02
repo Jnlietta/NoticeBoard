@@ -125,29 +125,6 @@ export const editAdRequest = (data) => {
         },
       );
 
-    //   const fd = new FormData();
-    //   fd.append('title', data.title);
-    //   fd.append('seller', data.seller);
-    //   fd.append('photo', data.photo);
-    //   fd.append('price', data.price);
-    //   fd.append('date', data.date);
-    //   fd.append('location', data.location);
-    //   fd.append('content', data.content);
-
-    //   console.log(fd);
-
-    //   const options = {
-    //     method: 'PUT',
-    //     body: fd
-    // };
-
-    // fetch(`${API_URL}/ads/${data.id}`, options)
-    //     .then(res => {
-    //         if (res.status === 201) {
-    //           dispatch(loadAdsRequest())
-    //         }
-    //     })
-
       dispatch(editAd(res.data));
       dispatch(endRequest({ name: ADD_AD }));
 
@@ -193,7 +170,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case ADD_AD:
       return { ...statePart, data: [...statePart.data, { ...action.payload }] };
     case EDIT_AD:
-      return { ...statePart, data: statePart.data.map(ad => (ad._id === action.payload.id ? { ...ad, ...action.payload } : ad))};
+      return { ...statePart, data: statePart.data.map(ad => (ad._id === action.payload._id ? { ...ad, ...action.payload } : ad))};
     case REMOVE_AD:
       return {...statePart, data: statePart.data.filter(ad => ad._id !== action.payload)};
     case START_REQUEST:
