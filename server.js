@@ -25,7 +25,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: tru
                     store: MongoStore.create(mongoose.connection) }));
 
   // serve static files from react app
-  //app.use(express.static(path.join(__dirname, '/client/build')));
+  app.use(express.static(path.join(__dirname, '/client/build')));
   app.use(express.static(path.join(__dirname, '/public')));
 
   //add routes
