@@ -39,11 +39,13 @@ const App = () => {
         }
       })
       .then(res => {
-        //console.log(res)
+        if(res !== undefined){
         dispatch(logIn(res))
+        }
       })
 
     dispatch(loadAdsRequest())
+    dispatch(finishLoading())
   }, [dispatch]);
 
   return (

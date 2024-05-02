@@ -37,7 +37,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case LOG_OUT:
       return { ...statePart, data: null, isLoggedIn: false };
     case FINISH_LOADING:
-      return{ ...statePart, loading: true };
+      return{ ...statePart, loading: false };
     default:
       return statePart;
   }
