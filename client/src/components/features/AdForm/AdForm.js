@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
@@ -11,6 +11,7 @@ import NoPermission from "../../pages/NoPermission/NoPermission";
 
 
 const AdForm = ({ action, actionText, formatDate, ...props }) => {
+    const quillRef = useRef();
 
     const [title, setTitle] = useState(props.title || '');
     const [photo, setPhoto] = useState(props.photo || '');
@@ -22,7 +23,7 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
     const isLoggedIn = useSelector(selectorIsLoggedIn);
 
     const user = useSelector(getUser);
-    const seller = user.userId;
+    const seller = user.id;
 
     const emptyQuill = '<p><br></p>';
 
@@ -30,15 +31,17 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
     const [contentError, setContentError] = useState(false);
 
     const handleSubmit = () => {
+        const quillInstance = quillRef.current.getEditor();
+        const textContent = quillInstance.getText();
+
         if(content === emptyQuill) return setContent('');
         setContentError(!content)
         setDateError(!date)
-        if(content && date) {
-            console.log({ title, seller, photo, price, date, location, content });
-            action({ title, seller, photo, price, date, location, content });
+
+        if(content && date && seller) {
+            action({ title, seller, photo, price, date, location, content: textContent });
           }
     };
-
     
 
     const { register, handleSubmit: validate, formState: { errors } } = useForm();
@@ -101,6 +104,7 @@ const AdForm = ({ action, actionText, formatDate, ...props }) => {
             <Form.Group className="mb-3" controlId="formContent">
                 <Form.Label>Content</Form.Label>
                 <ReactQuill 
+                    ref={quillRef}
                     theme="snow" 
                     value={content} 
                     onChange={setContent} 

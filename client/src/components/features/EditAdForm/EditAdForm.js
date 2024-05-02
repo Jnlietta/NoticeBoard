@@ -10,7 +10,7 @@ const EditAdForm = () => {
     const seller = adById.seller._id;
     
     const formatDate = new Date(adById.date);
-    console.log(formatDate, adById);
+    //console.log(formatDate, adById);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
