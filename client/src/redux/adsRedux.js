@@ -126,6 +126,7 @@ export const editAdRequest = (data) => {
       );
 
       dispatch(editAd(res.data));
+      dispatch(loadAdsRequest())
       dispatch(endRequest({ name: ADD_AD }));
 
     } catch(e) {

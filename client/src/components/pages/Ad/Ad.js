@@ -13,14 +13,19 @@ const Ad = () => {
     const {id} = useParams();
     const ad = useSelector(state => getAd(state, id));
 
-    const sellerAdLogin = ad.seller.login;
+    let sellerAdLogin = '';
+
+    if(ad) {
+        sellerAdLogin = ad.seller.login;
+    }
+    
     const userData = useSelector(getUser);
 
     const isLoggedIn = useSelector(selectorIsLoggedIn);
     let isAuthor = false;
 
     // if advertisement is created by logged user
-    if(sellerAdLogin === userData.login) {
+    if(sellerAdLogin && sellerAdLogin === userData.login) {
         isAuthor = true;
     }
 
