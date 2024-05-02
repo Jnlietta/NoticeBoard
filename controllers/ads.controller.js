@@ -85,22 +85,12 @@ exports.editById = async (req, res) => {
     const sanitizedLocation = sanitize(location);
     const sanitizedSeller = sanitize(seller);
 
-    let photoPath = null;
-    let fileType = '';
-
-    // check if it is new file
-    if(req.file){
-      // find previous photo file and delete
-      const existingAdvertisement = await Ads.findById(req.params.id);
-      deleteFile(`public/uploads/${existingAdvertisement.photo}`);
-
-      fileType = await getImageFileType(req.file);
-      photoPath = req.file.filename;
-    }
+    const fileType = req.file ? await getImageFileType(req.file) : null;
+    const photoPath = req.file?.filename;
        
     //  check if data fron form is correct
     if(sanitizedTitle && typeof sanitizedTitle === 'string' && sanitizedContent && typeof sanitizedContent == 'string' &&
-        sanitizedDate && typeof sanitizedDate === 'string' && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
+        sanitizedDate && typeof sanitizedDate === 'string' && (!req.file || (req.file && ['image/png', 'image/jpeg', 'image/gif'].includes(fileType))) &&
         sanitizedPrice && typeof sanitizedPrice === 'string' && sanitizedLocation && typeof sanitizedLocation === 'string' && 
         sanitizedSeller && typeof sanitizedSeller == 'string') {
 
@@ -119,6 +109,13 @@ exports.editById = async (req, res) => {
       );
 
       if(ubdatedAds) {
+        // check if it is new file
+        if(req.file){
+          // find previous photo file and delete
+          const existingAdvertisement = await Ads.findById(req.params.id);
+          deleteFile(`public/uploads/${existingAdvertisement.photo}`);
+        }
+
         res.json(ubdatedAds);
       }
       else res.status(404).json({ message: 'Not found...' });
@@ -130,6 +127,7 @@ exports.editById = async (req, res) => {
 
   }
   catch(err) {
+    console.log(err)
     res.status(500).json({ message: err });
   }
 
