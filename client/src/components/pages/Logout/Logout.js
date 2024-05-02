@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { API_URL } from "../../../config";
 import { logOut } from "../../../redux/authRedux";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 
 const Logout = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const options = {
@@ -16,6 +17,7 @@ const Logout = () => {
         fetch(`${API_URL}/auth/logout`, options)
             .then(res => {
                 dispatch(logOut());
+                navigate('/');
             })
             .catch(error => {
                 console.error('Error during logout:', error);
@@ -24,7 +26,7 @@ const Logout = () => {
     }, [dispatch]);
 
 
-    return <Navigate to="/" />;
+    return null;
 }
 
 export default Logout;
