@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import Header from './components/views/Header/Header';
 import Footer from './components/views/Footer/Footer';
 
@@ -12,10 +12,12 @@ import SearchAd from './components/pages/SearchAds/SearchAds';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
 import Logout from './components/pages/Logout/Logout';
+import { API_URL } from './config';
 
 import { loadAdsRequest } from './redux/adsRedux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { finishLoading, logIn, selectorLoading } from './redux/authRedux';
 
 
 
@@ -24,24 +26,47 @@ const App = () => {
 
   const dispatch = useDispatch();
 
+  const loading = useSelector(selectorLoading);
+
   useEffect(() => {
+
+    fetch(`${API_URL}/auth/user`)
+      .then(res => {
+        if(res.status === 200){
+          return res.json()
+        } else {
+          dispatch(finishLoading())
+        }
+      })
+      .then(res => {
+        //console.log(res)
+        dispatch(logIn(res))
+      })
+
     dispatch(loadAdsRequest())
   }, [dispatch]);
 
   return (
     <Container>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/ad/:id" element={<Ad />} />
-        <Route path="/ad/add" element={<AddAd />} />
-        <Route path="/ad/edit/:id" element={<EditAd />} />
-        <Route path="/ad/search/:searchPhrase" element={<SearchAd />} />
-        <Route path="/user/register" element={<Register />} />
-        <Route path="/user/login" element={<Login />} />
-        <Route path="/user/logout" element={<Logout />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
+      {loading &&
+        <Spinner animation="border" role="status" className="block mx-auto">
+          <span className="visually-hidden">Loading..</span>
+        </Spinner>
+      }
+      {!loading &&
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/ad/:id" element={<Ad />} />
+          <Route path="/ad/add" element={<AddAd />} />
+          <Route path="/ad/edit/:id" element={<EditAd />} />
+          <Route path="/ad/search/:searchPhrase" element={<SearchAd />} />
+          <Route path="/user/register" element={<Register />} />
+          <Route path="/user/login" element={<Login />} />
+          <Route path="/user/logout" element={<Logout />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      }
       <Footer />
     </Container>
   );
