@@ -17,7 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-mongoose.connect('mongodb://0.0.0.0:27017/noticeBoardDB', { useNewUrlParser: true }).then(() => {
+// connect to database
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
+if(NODE_ENV === 'production') dbUri = `mongodb+srv://juliawglinka:${process.env.DB_PASS}@cluster0.ejrpgdi.mongodb.net/noticeBoardDB?retryWrites=true&w=majority&appName=Cluster0`;
+else dbUri = 'mongodb://0.0.0.0:27017/noticeBoardDB';
+
+mongoose.connect(dbUri, { useNewUrlParser: true }).then(() => {
 
   app.use(session({ secret: `${process.env.SESSION_PASS}`, 
                     resave: false, 
